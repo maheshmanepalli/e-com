@@ -1,0 +1,56 @@
+<!-- <div class="wrapper">
+  <button mat-stroked-button color="primary">Primary</button>
+</div> -->
+<!-- <h1>Openkart App</h1> -->
+<div class="search">
+  <!-- <div>
+    <input type="text" [(ngModel)]="searchInput" (keyup.enter)="filterProduct()" /> (keyup)="filterProduct()"
+    <button (click)="filterProduct()">search</button>
+  </div> -->
+  <div class="sort-content">
+    <h3 class="sort-head">Sort by Price : ---</h3>
+    <mat-form-field>
+      <mat-label>Select</mat-label>
+      <mat-select [(ngModel)]="sortProductsBy" (ngModelChange)="sortProducts()">
+        <mat-option [value]="'asc'">LOW - HIGH</mat-option>
+        <mat-option [value]="'desc'">HIGH - LOW</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<div *ngIf="searchedProductsList.length > 0 || selectedValue!=='';then samp else load"></div>
+
+<ng-template #load>
+   <!-- <mat-progress-bar mode="buffer"></mat-progress-bar> -->
+   <mat-progress-bar mode="query"></mat-progress-bar>
+
+</ng-template>
+
+<ng-template #samp>
+  <div class="main-container">
+    <ul *ngFor="let item of searchedProductsList">
+      <mat-card class="card-item">
+        <mat-card-content class="card-content">
+          <img src={{item.image}} width="200px" height="200px" />
+          <h3 class="item-title"><b>{{item.title}}</b></h3>
+          <p>{{item.description}}</p>
+          <div class="rating-div">
+            <b>
+              <li>Price :${{item.price}} </li>
+            </b>
+            <b>
+              <li>Rating :⭐{{item.rating.rate}}</li>
+            </b>
+          </div>
+          <button mat-raised-button color="primary" (click)="addToCart(item)">Add To Cart</button>
+        </mat-card-content>
+      </mat-card>
+    </ul>
+  </div>
+</ng-template>
+
+<div *ngIf="searchedProductsList.length === 0 && selectedValue!=='' then nores"></div>
+<ng-template #nores>
+  <h3 class="no-result">No RESULT FOUND...</h3>
+</ng-template>
+<app-footer></app-footer>
